@@ -60,7 +60,7 @@ export const AddItemButton = styled.button<AddItemButtonProps>`
 `;
 
 export const NewItemFormContainer = styled.div`
-  max-width: 20rem;
+  max-width: 30rem;
   display: flex;
   flex-direction: column;
   width: 100%;
