@@ -10,7 +10,7 @@ const NewItemForm = ({ onAdd }: NewItemFormProps) => {
   const [text, setText] = useState("");
   const inputRef = useFocus();
 
-  const handleAddText = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleAddText = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter") {
       onAdd(text);
     }
