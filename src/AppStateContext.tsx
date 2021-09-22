@@ -1,6 +1,11 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { nanoid } from "nanoid";
-import { findItemIndexById, overrideItemAtIndex } from "./utils/arrayUtils";
+import {
+  findItemIndexById,
+  overrideItemAtIndex,
+  moveItem,
+} from "./utils/arrayUtils";
+import { DragItem } from "./DragItem";
 
 type Task = {
   id: string;
@@ -15,9 +20,11 @@ type List = {
 
 export type AppState = {
   lists: List[];
+  draggedItem: DragItem | undefined;
 };
 
 const appData: AppState = {
+  draggedItem: undefined,
   lists: [
     {
       id: "0",
@@ -63,7 +70,9 @@ export const useAppState = () => {
 // discriminated union, each action has a type property: the discriminant
 type Action =
   | { type: "ADD_LIST"; payload: string }
-  | { type: "ADD_TASK"; payload: { text: string; listId: string } };
+  | { type: "ADD_TASK"; payload: { text: string; listId: string } }
+  | { type: "MOVE_LIST"; payload: { dragIndex: number; hoverIndex: number } }
+  | { type: "SET_DRAG_ITEM"; payload: DragItem | undefined };
 
 const appStateReducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
@@ -105,6 +114,21 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
           targetLaneIndex
         ),
       };
+    }
+
+    case "MOVE_LIST": {
+      return {
+        ...state,
+        lists: moveItem(
+          state.lists,
+          action.payload.dragIndex,
+          action.payload.hoverIndex
+        ),
+      };
+    }
+
+    case "SET_DRAG_ITEM": {
+      return { ...state, draggedItem: action.payload };
     }
 
     default:

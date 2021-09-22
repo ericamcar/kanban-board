@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import { ColumnContainer, ColumnTitle } from "./styles";
 import AddNewItem from "./AddNewItem";
 import { useAppState } from "./AppStateContext";
 import Card from "./Card";
+import { useItemDrag } from "./utils/useItemDrag";
 
 type ColumnProps = {
   title: string;

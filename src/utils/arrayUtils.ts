@@ -19,3 +19,16 @@ export function overrideItemAtIndex<T>(
     return newItem;
   });
 }
+
+export const moveItem = <T>(array: T[], from: number, to: number) => {
+  const item = array[from];
+  return insertItemAtIndex(removeItemAtIndex(array, from), item, to);
+};
+
+export const removeItemAtIndex = <T>(array: T[], from: number) => {
+  return [...array.slice(0, from), ...array.slice(from + 1)];
+};
+
+export const insertItemAtIndex = <T>(array: T[], item: T, to: number) => {
+  return [...array.slice(0, to), item, ...array.slice(to)];
+};
